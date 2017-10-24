@@ -2,18 +2,21 @@ package ar.edu.itba.pod.tpe.utils;
 
 import java.util.Comparator;
 
-public class KeyValue implements Comparable<KeyValue>{
-	private int value;
+public class KeyValue<T>{
+	private T value;
 	private String key;
 
-	public KeyValue(String k, int v){
+	public KeyValue(String k, T v){
 		key = k;
 		value = v;
 	}
 
-	@Override
-	public int compareTo(KeyValue o) {
-		return o.value - value;
+	public T getValue(){
+		return this.value;
+	}
+
+	public String getKey(){
+		return this.key;
 	}
 
 	@Override

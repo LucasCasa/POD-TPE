@@ -1,10 +1,13 @@
 package ar.edu.itba.pod.tpe;
 
 import ar.edu.itba.pod.tpe.mappers.Ej2_Mapper;
+import ar.edu.itba.pod.tpe.mappers.Ej3_Mapper;
 import ar.edu.itba.pod.tpe.mappers.ProvinceMapper;
 import ar.edu.itba.pod.tpe.reducers.Ej2_ReducerFactory;
+import ar.edu.itba.pod.tpe.reducers.Ej3_ReducerFactory;
 import ar.edu.itba.pod.tpe.reducers.ProvinceReducerFactory;
 import ar.edu.itba.pod.tpe.submitters.DescendantSortedCollator;
+import ar.edu.itba.pod.tpe.submitters.EmploymentRatioCollator;
 import ar.edu.itba.pod.tpe.submitters.TopNFromDescendantSortedCollator;
 import ar.edu.itba.pod.tpe.utils.CensusEntry;
 import ar.edu.itba.pod.tpe.utils.KeyValue;
@@ -27,16 +30,16 @@ public class App {
 
         JobTracker jt = hi.getJobTracker("province-count");
         Scanner s = new Scanner(new File("census100.csv"));
-        ISet<CensusEntry> set = hi.getSet("censusData666");
+        ISet<CensusEntry> set = hi.getSet("censusData667");
         while(s.hasNextLine()){
             set.add(new CensusEntry(s.nextLine()));
         }
         final KeyValueSource<String, CensusEntry> source = KeyValueSource.fromSet(set);
         Job<String, CensusEntry> job = jt.newJob(source);
-        ICompletableFuture<Set<KeyValue>> future = job
-                .mapper(new Ej2_Mapper("Buenos Aires"))
-                .reducer(new Ej2_ReducerFactory())
-                .submit(new TopNFromDescendantSortedCollator(10));
+        ICompletableFuture<Set<KeyValue<Double>>> future = job
+                .mapper(new Ej3_Mapper())
+                .reducer(new Ej3_ReducerFactory())
+                .submit(new EmploymentRatioCollator());
 
         System.out.println(future.get());
     }
