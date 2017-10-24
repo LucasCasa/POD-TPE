@@ -1,8 +1,11 @@
 package ar.edu.itba.pod.tpe;
 
+import ar.edu.itba.pod.tpe.mappers.Ej2_Mapper;
 import ar.edu.itba.pod.tpe.mappers.ProvinceMapper;
+import ar.edu.itba.pod.tpe.reducers.Ej2_ReducerFactory;
 import ar.edu.itba.pod.tpe.reducers.ProvinceReducerFactory;
 import ar.edu.itba.pod.tpe.submitters.DescendantSortedCollator;
+import ar.edu.itba.pod.tpe.submitters.TopNFromDescendantSortedCollator;
 import ar.edu.itba.pod.tpe.utils.CensusEntry;
 import ar.edu.itba.pod.tpe.utils.KeyValue;
 import com.hazelcast.client.HazelcastClient;
@@ -31,9 +34,9 @@ public class App {
         final KeyValueSource<String, CensusEntry> source = KeyValueSource.fromSet(set);
         Job<String, CensusEntry> job = jt.newJob(source);
         ICompletableFuture<Set<KeyValue>> future = job
-                .mapper(new ProvinceMapper())
-                .reducer(new ProvinceReducerFactory())
-                .submit(new DescendantSortedCollator());
+                .mapper(new Ej2_Mapper("Buenos Aires"))
+                .reducer(new Ej2_ReducerFactory())
+                .submit(new TopNFromDescendantSortedCollator(10));
 
         System.out.println(future.get());
     }
