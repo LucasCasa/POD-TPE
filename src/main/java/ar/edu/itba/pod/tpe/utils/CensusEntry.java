@@ -1,4 +1,4 @@
-package ar.edu.itba.pod.tpe;
+package ar.edu.itba.pod.tpe.utils;
 
 import com.hazelcast.nio.serialization.DataSerializable;
 

@@ -1,4 +1,4 @@
-package ar.edu.itba.pod.tpe;
+package ar.edu.itba.pod.tpe.reducers;
 
 import com.hazelcast.mapreduce.Reducer;
 import com.hazelcast.mapreduce.ReducerFactory;

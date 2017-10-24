@@ -1,5 +1,10 @@
 package ar.edu.itba.pod.tpe;
 
+import ar.edu.itba.pod.tpe.mappers.ProvinceMapper;
+import ar.edu.itba.pod.tpe.reducers.ProvinceReducerFactory;
+import ar.edu.itba.pod.tpe.submitters.DescendantSortedCollator;
+import ar.edu.itba.pod.tpe.utils.CensusEntry;
+import ar.edu.itba.pod.tpe.utils.KeyValue;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.config.Config;
@@ -7,11 +12,8 @@ import com.hazelcast.core.*;
 import com.hazelcast.mapreduce.*;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.StringTokenizer;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 public class App {
     public static void main(String[] args) throws Exception{
@@ -22,14 +24,16 @@ public class App {
 
         JobTracker jt = hi.getJobTracker("province-count");
         Scanner s = new Scanner(new File("census100.csv"));
-        IMap<Integer,String> map = hi.getMap("censusData666");
+        ISet<CensusEntry> set = hi.getSet("censusData666");
         while(s.hasNextLine()){
-            String[] data = s.nextLine().split(",");
-            map.put(Integer.parseInt(data[1]),data[3]);
+            set.add(new CensusEntry(s.nextLine()));
         }
-        final KeyValueSource<Integer,String> source = KeyValueSource.fromMap(map);
-        Job<Integer, String> job = jt.newJob(source);
-        ICompletableFuture<Map<String,Integer>> future = job.mapper(new ProvinceMapper()).reducer(new ProvinceReducerFactory()).submit();
+        final KeyValueSource<String, CensusEntry> source = KeyValueSource.fromSet(set);
+        Job<String, CensusEntry> job = jt.newJob(source);
+        ICompletableFuture<Set<KeyValue>> future = job
+                .mapper(new ProvinceMapper())
+                .reducer(new ProvinceReducerFactory())
+                .submit(new DescendantSortedCollator());
 
         System.out.println(future.get());
     }
