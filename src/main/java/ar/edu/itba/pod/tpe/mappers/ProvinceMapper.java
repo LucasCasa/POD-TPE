@@ -16,11 +16,8 @@ public class ProvinceMapper implements Mapper<String,CensusEntry,String,Integer>
     }
     @Override
     public void map(String s, CensusEntry ce, Context<String, Integer> context) {
-        StringTokenizer tokenizer = new StringTokenizer(ce.getProvince().toLowerCase());
-        while(tokenizer.hasMoreTokens()) {
-            String aux = tokenizer.nextToken(",");
-            String t = ProvinceTo.region.get(aux);
-            context.emit(t,1);
-        }
+        String aux = ce.getProvince().toLowerCase();
+        String t = ProvinceTo.region.get(aux);
+        context.emit(t,1);
     }
 }

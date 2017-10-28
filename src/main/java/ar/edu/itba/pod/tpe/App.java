@@ -8,7 +8,8 @@ import ar.edu.itba.pod.tpe.reducers.Ej3_ReducerFactory;
 import ar.edu.itba.pod.tpe.reducers.ProvinceReducerFactory;
 import ar.edu.itba.pod.tpe.submitters.DescendantSortedCollator;
 import ar.edu.itba.pod.tpe.submitters.EmploymentRatioCollator;
-import ar.edu.itba.pod.tpe.submitters.TopNFromDescendantSortedCollator;
+import ar.edu.itba.pod.tpe.mappers.Ej6Mapper;
+import ar.edu.itba.pod.tpe.reducers.Ej6ReducerFactory;
 import ar.edu.itba.pod.tpe.utils.CensusEntry;
 import ar.edu.itba.pod.tpe.utils.KeyValue;
 import com.hazelcast.client.HazelcastClient;
@@ -37,6 +38,7 @@ public class App {
         }
         final KeyValueSource<String, CensusEntry> source = KeyValueSource.fromSet(set);
         Job<String, CensusEntry> job = jt.newJob(source);
+
         ICompletableFuture<List<KeyValue<Double>>> future = job
                 .mapper(new Ej3_Mapper())
                 .reducer(new Ej3_ReducerFactory())
