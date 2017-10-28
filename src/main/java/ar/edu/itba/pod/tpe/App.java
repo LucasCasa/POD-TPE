@@ -18,6 +18,7 @@ import com.hazelcast.core.*;
 import com.hazelcast.mapreduce.*;
 
 import java.io.File;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -36,7 +37,7 @@ public class App {
         }
         final KeyValueSource<String, CensusEntry> source = KeyValueSource.fromSet(set);
         Job<String, CensusEntry> job = jt.newJob(source);
-        ICompletableFuture<Set<KeyValue<Double>>> future = job
+        ICompletableFuture<List<KeyValue<Double>>> future = job
                 .mapper(new Ej3_Mapper())
                 .reducer(new Ej3_ReducerFactory())
                 .submit(new EmploymentRatioCollator());

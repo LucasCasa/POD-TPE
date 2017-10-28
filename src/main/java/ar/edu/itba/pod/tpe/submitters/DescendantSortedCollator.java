@@ -11,7 +11,7 @@ public class DescendantSortedCollator implements Collator<Map.Entry<String,Integ
 	@Override
 	public Set<KeyValue<Integer>> collate(Iterable<Map.Entry<String, Integer>> iterable) {
 		for(Map.Entry<String,Integer> e : iterable){
-			sorted.add(new KeyValue<Integer>(e.getKey(),e.getValue()));
+			sorted.add(new KeyValue<>(e.getKey(),e.getValue()));
 		}
 		return sorted;
 	}
