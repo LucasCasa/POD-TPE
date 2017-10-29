@@ -1,8 +1,6 @@
 package ar.edu.itba.pod.tpe.utils;
 
-import java.util.Comparator;
-
-public class KeyValue<T>{
+public class KeyValue<T extends Comparable<T>> implements Comparable<KeyValue<T>>{
 	private T value;
 	private String key;
 
@@ -31,5 +29,13 @@ public class KeyValue<T>{
 	@Override
 	public String toString() {
 		return key + ": " + value;
+	}
+
+	@Override
+	public int compareTo(KeyValue<T> o) {
+		int res = o.value.compareTo(this.value);
+		if(res == 0)
+			res = this.key.compareTo(o.key);
+		return res;
 	}
 }

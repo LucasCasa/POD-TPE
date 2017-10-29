@@ -4,7 +4,7 @@ import ar.edu.itba.pod.tpe.utils.EmploymentStatistics;
 import com.hazelcast.mapreduce.Reducer;
 import com.hazelcast.mapreduce.ReducerFactory;
 
-public class Ej3_ReducerFactory implements ReducerFactory<String,Boolean,EmploymentStatistics> {
+public class Ej3ReducerFactory implements ReducerFactory<String,Boolean,EmploymentStatistics> {
 
 	@Override
 	public Reducer<Boolean, EmploymentStatistics> newReducer(String s) {

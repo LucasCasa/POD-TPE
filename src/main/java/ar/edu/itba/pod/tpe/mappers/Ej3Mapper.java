@@ -6,7 +6,7 @@ import ar.edu.itba.pod.tpe.utils.ProvinceTo;
 import com.hazelcast.mapreduce.Context;
 import com.hazelcast.mapreduce.Mapper;
 
-public class Ej3_Mapper implements Mapper<String,CensusEntry,String,Boolean> {
+public class Ej3Mapper implements Mapper<String,CensusEntry,String,Boolean> {
 
 	@Override
 	public void map(String s, CensusEntry censusEntry, Context<String, Boolean> context) {

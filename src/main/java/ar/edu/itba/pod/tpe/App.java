@@ -1,15 +1,8 @@
 package ar.edu.itba.pod.tpe;
 
-import ar.edu.itba.pod.tpe.mappers.Ej2_Mapper;
-import ar.edu.itba.pod.tpe.mappers.Ej3_Mapper;
-import ar.edu.itba.pod.tpe.mappers.ProvinceMapper;
-import ar.edu.itba.pod.tpe.reducers.Ej2_ReducerFactory;
-import ar.edu.itba.pod.tpe.reducers.Ej3_ReducerFactory;
-import ar.edu.itba.pod.tpe.reducers.ProvinceReducerFactory;
-import ar.edu.itba.pod.tpe.submitters.DescendantSortedCollator;
-import ar.edu.itba.pod.tpe.submitters.EmploymentRatioCollator;
 import ar.edu.itba.pod.tpe.mappers.Ej6Mapper;
 import ar.edu.itba.pod.tpe.reducers.Ej6ReducerFactory;
+import ar.edu.itba.pod.tpe.submitters.TopNFromDescendantsWithMinimumSortedCollator;
 import ar.edu.itba.pod.tpe.utils.CensusEntry;
 import ar.edu.itba.pod.tpe.utils.KeyValue;
 import com.hazelcast.client.HazelcastClient;
@@ -19,7 +12,6 @@ import com.hazelcast.core.*;
 import com.hazelcast.mapreduce.*;
 
 import java.io.File;
-import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -39,10 +31,10 @@ public class App {
         final KeyValueSource<String, CensusEntry> source = KeyValueSource.fromSet(set);
         Job<String, CensusEntry> job = jt.newJob(source);
 
-        ICompletableFuture<List<KeyValue<Double>>> future = job
-                .mapper(new Ej3_Mapper())
-                .reducer(new Ej3_ReducerFactory())
-                .submit(new EmploymentRatioCollator());
+        ICompletableFuture<Set<KeyValue>> future = job
+                .mapper(new Ej6Mapper())
+                .reducer(new Ej6ReducerFactory())
+                .submit(new TopNFromDescendantsWithMinimumSortedCollator<>(1,5));
 
         System.out.println(future.get());
     }
