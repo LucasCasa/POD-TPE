@@ -7,11 +7,11 @@ import com.hazelcast.mapreduce.Mapper;
 
 import java.util.StringTokenizer;
 
-public class Ej2_Mapper implements Mapper<String,CensusEntry,String,Integer> {
+public class Ej2Mapper implements Mapper<String,CensusEntry,String,Integer> {
 
 	private String province;
 
-	public Ej2_Mapper(String province){
+	public Ej2Mapper(String province){
 		this.province = province;
 	}
 

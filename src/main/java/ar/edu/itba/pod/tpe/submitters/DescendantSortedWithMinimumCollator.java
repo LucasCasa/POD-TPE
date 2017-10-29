@@ -19,7 +19,7 @@ public class DescendantSortedWithMinimumCollator<T extends Comparable> implement
 	@Override
 	public Set<KeyValue> collate(Iterable<Map.Entry<String, Integer>> iterable) {
 		for(Map.Entry<String,Integer> e : iterable){
-			if(minimum.compareTo(e.getValue()) < 0) {
+			if(minimum.compareTo(e.getValue()) <= 0) {
 				sorted.add(new KeyValue(e.getKey(), e.getValue()));
 			}
 		}

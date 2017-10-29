@@ -24,12 +24,13 @@ public class App {
 
         JobTracker jt = hi.getJobTracker("province-count");
         Scanner s = new Scanner(new File("census100.csv"));
-        ISet<CensusEntry> set = hi.getSet("censusData666");
+        ISet<CensusEntry> set = hi.getSet("censusData667");
         while(s.hasNextLine()){
             set.add(new CensusEntry(s.nextLine()));
         }
         final KeyValueSource<String, CensusEntry> source = KeyValueSource.fromSet(set);
         Job<String, CensusEntry> job = jt.newJob(source);
+
         ICompletableFuture<Set<KeyValue>> future = job
                 .mapper(new Ej6Mapper())
                 .reducer(new Ej6ReducerFactory())
