@@ -9,18 +9,11 @@ import java.util.HashSet;
 
 public class Ej4Mapper implements Mapper<String,CensusEntry,String ,Integer> {
 
-    HashSet<Integer> houseHolds;
-
-    public Ej4Mapper(){
-        houseHolds = new HashSet<>();
-    }
+    public Ej4Mapper(){ }
 
     @Override
     public void map(String s, CensusEntry cE, Context<String, Integer> context) {
-        if(!houseHolds.contains(cE.getId())){
-            houseHolds.add(cE.getId());
             String t = ProvinceTo.region.get(cE.getProvince().toLowerCase());
-            context.emit(t,1);
+            context.emit(t,cE.getId());
         }
-    }
 }
