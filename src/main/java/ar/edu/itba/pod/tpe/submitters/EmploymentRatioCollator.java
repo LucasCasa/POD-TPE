@@ -8,11 +8,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class EmploymentRatioCollator implements Collator<Map.Entry<String,EmploymentStatistics>, Set<KeyValue<Double>>> {
-	Set<KeyValue<Double>> ratios = new TreeSet<>();
+public class EmploymentRatioCollator implements Collator<Map.Entry<String,EmploymentStatistics>, Set<KeyValue<String,Double>>> {
+	Set<KeyValue<String,Double>> ratios = new TreeSet<>();
 
 	@Override
-	public Set<KeyValue<Double>> collate(Iterable<Map.Entry<String, EmploymentStatistics>> iterable) {
+	public Set<KeyValue<String,Double>> collate(Iterable<Map.Entry<String, EmploymentStatistics>> iterable) {
 		for(Map.Entry<String,EmploymentStatistics> e : iterable){
 			EmploymentStatistics stats = e.getValue();
 			double ratio = ((double)stats.getEmployed()/((double)stats.getEmployed()+stats.getUnemployed()));

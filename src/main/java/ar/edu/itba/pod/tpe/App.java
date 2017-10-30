@@ -1,10 +1,14 @@
 package ar.edu.itba.pod.tpe;
 
 import ar.edu.itba.pod.tpe.mappers.Ej6Mapper;
+import ar.edu.itba.pod.tpe.mappers.Ej7Mapper;
 import ar.edu.itba.pod.tpe.reducers.Ej6ReducerFactory;
+import ar.edu.itba.pod.tpe.reducers.Ej7ReducerFactory;
+import ar.edu.itba.pod.tpe.submitters.ProvincePairCounterCollator;
 import ar.edu.itba.pod.tpe.submitters.TopNFromDescendantsWithMinimumSortedCollator;
 import ar.edu.itba.pod.tpe.utils.CensusEntry;
 import ar.edu.itba.pod.tpe.utils.KeyValue;
+import ar.edu.itba.pod.tpe.utils.ProvincePair;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.config.Config;
@@ -22,19 +26,19 @@ public class App {
         final ClientConfig cc = new ClientConfig();
         final HazelcastInstance hi = HazelcastClient.newHazelcastClient(cc);
 
-        JobTracker jt = hi.getJobTracker("province-count");
+        JobTracker jt = hi.getJobTracker("province-pairs");
         Scanner s = new Scanner(new File("census100.csv"));
-        ISet<CensusEntry> set = hi.getSet("censusData667");
+        ISet<CensusEntry> set = hi.getSet("censusData669");
         while(s.hasNextLine()){
             set.add(new CensusEntry(s.nextLine()));
         }
         final KeyValueSource<String, CensusEntry> source = KeyValueSource.fromSet(set);
         Job<String, CensusEntry> job = jt.newJob(source);
 
-        ICompletableFuture<Set<KeyValue>> future = job
-                .mapper(new Ej6Mapper())
-                .reducer(new Ej6ReducerFactory())
-                .submit(new TopNFromDescendantsWithMinimumSortedCollator<>(1,5));
+        ICompletableFuture<Set<KeyValue<ProvincePair,Integer>>> future = job
+                .mapper(new Ej7Mapper())
+                .reducer(new Ej7ReducerFactory())
+                .submit(new ProvincePairCounterCollator(2));
 
         System.out.println(future.get());
     }
