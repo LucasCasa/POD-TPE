@@ -5,11 +5,11 @@ import com.hazelcast.mapreduce.Collator;
 
 import java.util.*;
 
-public class DescendantSortedCollator implements Collator<Map.Entry<String,Integer>, Set<KeyValue<Integer>>> {
-	SortedSet<KeyValue<Integer>> sorted = new TreeSet<>((KeyValue<Integer> o1, KeyValue<Integer> o2) -> o2.getValue()-o1.getValue());
+public class DescendantSortedCollator implements Collator<Map.Entry<String,Integer>, Set<KeyValue<String,Integer>>> {
+	SortedSet<KeyValue<String,Integer>> sorted = new TreeSet<>((KeyValue<String,Integer> o1, KeyValue<String,Integer> o2) -> o2.getValue()-o1.getValue());
 
 	@Override
-	public Set<KeyValue<Integer>> collate(Iterable<Map.Entry<String, Integer>> iterable) {
+	public Set<KeyValue<String,Integer>> collate(Iterable<Map.Entry<String, Integer>> iterable) {
 		for(Map.Entry<String,Integer> e : iterable){
 			sorted.add(new KeyValue<>(e.getKey(),e.getValue()));
 		}

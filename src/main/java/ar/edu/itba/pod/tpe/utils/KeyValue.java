@@ -1,10 +1,10 @@
 package ar.edu.itba.pod.tpe.utils;
 
-public class KeyValue<T extends Comparable<T>> implements Comparable<KeyValue<T>>{
+public class KeyValue<V extends Comparable<V>, T extends Comparable<T>> implements Comparable<KeyValue<V, T>>{
 	private T value;
-	private String key;
+	private V key;
 
-	public KeyValue(String k, T v){
+	public KeyValue(V k, T v){
 		key = k;
 		value = v;
 	}
@@ -13,7 +13,7 @@ public class KeyValue<T extends Comparable<T>> implements Comparable<KeyValue<T>
 		return this.value;
 	}
 
-	public String getKey(){
+	public V getKey(){
 		return this.key;
 	}
 
@@ -32,7 +32,7 @@ public class KeyValue<T extends Comparable<T>> implements Comparable<KeyValue<T>
 	}
 
 	@Override
-	public int compareTo(KeyValue<T> o) {
+	public int compareTo(KeyValue<V, T> o) {
 		int res = o.value.compareTo(this.value);
 		if(res == 0)
 			res = this.key.compareTo(o.key);
