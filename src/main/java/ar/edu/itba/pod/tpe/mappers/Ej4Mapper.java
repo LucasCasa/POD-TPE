@@ -7,11 +7,11 @@ import com.hazelcast.mapreduce.Mapper;
 
 import java.util.HashSet;
 
-public class HouseHoldMapper implements Mapper<String,CensusEntry,String ,Integer> {
+public class Ej4Mapper implements Mapper<String,CensusEntry,String ,Integer> {
 
     HashSet<Integer> houseHolds;
 
-    public HouseHoldMapper(){
+    public Ej4Mapper(){
         houseHolds = new HashSet<>();
     }
 

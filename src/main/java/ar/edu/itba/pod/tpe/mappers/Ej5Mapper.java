@@ -5,9 +5,9 @@ import ar.edu.itba.pod.tpe.utils.ProvinceTo;
 import com.hazelcast.mapreduce.Context;
 import com.hazelcast.mapreduce.Mapper;
 
-public class HouseHoldAverageMapper implements Mapper<String,CensusEntry,String ,Integer> {
+public class Ej5Mapper implements Mapper<String,CensusEntry,String ,Integer> {
 
-    public HouseHoldAverageMapper(){ }
+    public Ej5Mapper(){ }
 
     @Override
     public void map(String s, CensusEntry cE, Context<String, Integer> context) {

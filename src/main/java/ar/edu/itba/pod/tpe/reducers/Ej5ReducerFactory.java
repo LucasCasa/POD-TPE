@@ -6,17 +6,17 @@ import com.hazelcast.mapreduce.ReducerFactory;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 
-public class HouseHoldAverageReducerFactory implements ReducerFactory<String, Integer, Float> {
+public class Ej5ReducerFactory implements ReducerFactory<String, Integer, Float> {
     @Override
     public Reducer<Integer, Float> newReducer(String s) {
-        return new HouseHoldAverageReducer();
+        return new Ej5Reducer();
     }
 
-    private class HouseHoldAverageReducer extends Reducer<Integer, Float> {
+    private class Ej5Reducer extends Reducer<Integer, Float> {
 
         private HashMap<Integer,Integer> houses;
 
-        HouseHoldAverageReducer(){
+        Ej5Reducer(){
             houses = new HashMap<>();
         }
         @Override
