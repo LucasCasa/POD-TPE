@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class TopNFromDescendantSortedCollator extends DescendantSortedCollator {
+public class TopNFromDescendantSortedCollator<T extends Comparable<T>> extends DescendantSortedCollator<T> {
 
 	private int n;
 
@@ -16,11 +16,11 @@ public class TopNFromDescendantSortedCollator extends DescendantSortedCollator {
 		this.n = n;
 	}
 
-	public Set<KeyValue<String,Integer>> collate(Iterable<Map.Entry<String, Integer>> iterable) {
-		Set<KeyValue<String,Integer>> sorted = super.collate(iterable);
+	public Set<KeyValue<String, T>> collate(Iterable<Map.Entry<String, T>> iterable) {
+		Set<KeyValue<String, T>> sorted = super.collate(iterable);
 		int count = 0;
-		Set<KeyValue<String,Integer>> target = new TreeSet<>((KeyValue<String,Integer> o1, KeyValue<String,Integer> o2) -> o2.getValue()-o1.getValue());
-		for (KeyValue<String,Integer> kv: sorted) {
+		Set<KeyValue<String, T>> target = new TreeSet<>();
+		for (KeyValue<String, T> kv: sorted) {
 			if (count >= n) break;
 
 			target.add(kv);

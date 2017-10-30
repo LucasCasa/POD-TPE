@@ -21,10 +21,8 @@ import java.util.Set;
 
 public class App {
     public static void main(String[] args) throws Exception{
-        Config config = new Config();
-        HazelcastInstance h = Hazelcast.newHazelcastInstance(config);
-        final ClientConfig cc = new ClientConfig();
-        final HazelcastInstance hi = HazelcastClient.newHazelcastClient(cc);
+        HazelcastInstance h = Hazelcast.newHazelcastInstance();
+        final HazelcastInstance hi = HazelcastClient.newHazelcastClient();
 
         JobTracker jt = hi.getJobTracker("province-pairs");
         Scanner s = new Scanner(new File("census100.csv"));

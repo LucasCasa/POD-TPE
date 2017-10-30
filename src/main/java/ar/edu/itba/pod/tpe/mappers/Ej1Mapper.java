@@ -9,9 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-public class ProvinceMapper implements Mapper<String,CensusEntry,String,Integer>{
+public class Ej1Mapper implements Mapper<String,CensusEntry,String,Integer>{
 
-    public ProvinceMapper() {
+    public Ej1Mapper() {
 
     }
     @Override

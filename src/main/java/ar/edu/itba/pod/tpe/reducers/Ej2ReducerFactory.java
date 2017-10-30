@@ -14,7 +14,7 @@ public class Ej2ReducerFactory implements ReducerFactory<String, Integer, Intege
 
 		@Override
 		public void reduce(Integer integer) {
-			count++;
+			count+= integer;
 		}
 
 		@Override

@@ -3,7 +3,7 @@ package ar.edu.itba.pod.tpe.reducers;
 import com.hazelcast.mapreduce.Reducer;
 import com.hazelcast.mapreduce.ReducerFactory;
 
-public class ProvinceReducerFactory implements ReducerFactory<String, Integer, Integer> {
+public class Ej1ReducerFactory implements ReducerFactory<String, Integer, Integer> {
 
     public Reducer<Integer, Integer> newReducer(String string) {
         return new ProvinceReducer();
@@ -14,7 +14,7 @@ public class ProvinceReducerFactory implements ReducerFactory<String, Integer, I
 
         @Override
         public void reduce(Integer integer) {
-            count++;
+            count+= integer;
         }
 
         @Override
