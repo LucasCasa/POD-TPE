@@ -73,4 +73,7 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+# Input files
+*.csv
+
 pod-tpe.iml
