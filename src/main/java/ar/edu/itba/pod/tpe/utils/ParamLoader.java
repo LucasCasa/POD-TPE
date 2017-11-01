@@ -6,7 +6,7 @@ import ar.edu.itba.pod.tpe.reducers.*;
 import ar.edu.itba.pod.tpe.submitters.*;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.mapreduce.*;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import com.hazelcast.security.UsernamePasswordCredentials;
 
 public class ParamLoader {
 		private String address, data, outPath, timeOutPath;
@@ -20,7 +20,14 @@ public class ParamLoader {
 	}
 
 	public ClientConfig getConfig(){
-		throw new NotImplementedException();
+		ClientConfig config = new ClientConfig();
+		String[] addresses = address.split(";");
+		for(String addr : addresses) {
+			config.getNetworkConfig().addAddress(addr);
+		}
+		config.setCredentials(new UsernamePasswordCredentials("55302","pass"));
+		config.getGroupConfig().setName("55302").setPassword("pass");
+		return config;
 	}
 
 	public Mapper getMapper(){
@@ -117,5 +124,13 @@ public class ParamLoader {
 
 	public String getDataPath() {
 		return data;
+	}
+
+	public String getLogFile() {
+		return timeOutPath;
+	}
+
+	public String getOutPath() {
+		return outPath;
 	}
 }

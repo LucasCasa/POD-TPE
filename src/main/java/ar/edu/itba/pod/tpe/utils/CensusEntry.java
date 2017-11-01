@@ -18,6 +18,9 @@ public class CensusEntry implements Serializable {
         loadData(Integer.parseInt(data[0]), Integer.parseInt(data[1]), data[2], data[3]);
     }
 
+    public CensusEntry(String[] data) {
+        loadData(Integer.parseInt(data[0]), Integer.parseInt(data[1]), data[2], data[3]);
+    }
     private void loadData(int ocupation, int id, String department, String province){
         this.ocupation = ocupation;
         this.id = id;
