@@ -53,10 +53,9 @@ public class App {
 		List<CensusEntry> nl = new ArrayList<>(1000000);
         for(String[] row : allRows){
             nl.add(new CensusEntry(row));
-            System.out.println("Added");
         }
-        System.out.println("Adding to IList");
-        set.addAll(nl);
+    System.out.println("Adding to IList");
+    set.addAll(nl);
 		System.out.println("Finished Adding to IList");
 		logger.info("Finished Reading and Parsing data. Time elapsed: " + (System.currentTimeMillis() - time) + "ms");
 		System.out.println(set.size());
