@@ -1,8 +1,6 @@
 package ar.edu.itba.pod.tpe.utils;
 
-import ar.edu.itba.pod.tpe.combiner.Ej1CombinerFactory;
-import ar.edu.itba.pod.tpe.combiner.Ej2CombinerFactory;
-import ar.edu.itba.pod.tpe.combiner.Ej3CombinerFactory;
+import ar.edu.itba.pod.tpe.combiner.*;
 import ar.edu.itba.pod.tpe.mappers.*;
 import ar.edu.itba.pod.tpe.reducers.*;
 import ar.edu.itba.pod.tpe.submitters.*;
@@ -118,6 +116,10 @@ public class ParamLoader {
 				return new Ej2CombinerFactory();
 			case 3:
 				return new Ej3CombinerFactory();
+            case 4:
+                return new Ej4CombinerFactory();
+            case 6:
+                return new Ej6CombinerFactory();
 			default:
 				throw new IllegalArgumentException("This query has no combiner");
 		}
