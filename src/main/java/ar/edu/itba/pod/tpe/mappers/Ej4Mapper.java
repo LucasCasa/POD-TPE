@@ -5,8 +5,6 @@ import ar.edu.itba.pod.tpe.utils.ProvinceTo;
 import com.hazelcast.mapreduce.Context;
 import com.hazelcast.mapreduce.Mapper;
 
-import java.util.HashSet;
-
 public class Ej4Mapper implements Mapper<String,CensusEntry,String ,Integer> {
 
     public Ej4Mapper(){ }
