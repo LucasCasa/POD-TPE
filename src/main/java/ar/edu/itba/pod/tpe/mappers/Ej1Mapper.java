@@ -5,15 +5,10 @@ import ar.edu.itba.pod.tpe.utils.ProvinceTo;
 import com.hazelcast.mapreduce.Context;
 import com.hazelcast.mapreduce.Mapper;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringTokenizer;
-
 public class Ej1Mapper implements Mapper<String,CensusEntry,String,Integer>{
 
-    public Ej1Mapper() {
+    public Ej1Mapper() {}
 
-    }
     @Override
     public void map(String s, CensusEntry ce, Context<String, Integer> context) {
         String aux = ce.getProvince().toLowerCase();

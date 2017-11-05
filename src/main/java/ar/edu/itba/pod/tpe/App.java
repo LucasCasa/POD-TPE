@@ -1,14 +1,9 @@
 package ar.edu.itba.pod.tpe;
 
-import ar.edu.itba.pod.tpe.mappers.Ej7Mapper;
-import ar.edu.itba.pod.tpe.reducers.Ej7ReducerFactory;
-import ar.edu.itba.pod.tpe.submitters.ProvincePairCounterCollator;
 import ar.edu.itba.pod.tpe.utils.CensusEntry;
 import ar.edu.itba.pod.tpe.utils.KeyValue;
 import ar.edu.itba.pod.tpe.utils.ParamLoader;
-import ar.edu.itba.pod.tpe.utils.ProvincePair;
 import com.hazelcast.client.HazelcastClient;
-import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.*;
 import com.hazelcast.mapreduce.*;
 import com.univocity.parsers.csv.CsvParser;
@@ -16,12 +11,10 @@ import com.univocity.parsers.csv.CsvParserSettings;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
-import org.apache.log4j.SimpleLayout;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 public class App {

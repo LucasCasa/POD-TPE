@@ -117,11 +117,7 @@ public class ParamLoader {
 				throw new IllegalArgumentException("This query has no combiner");
 		}
 	}
-
-	public void loadLog(){
-
-	}
-
+	
 	public String getDataPath() {
 		return data;
 	}

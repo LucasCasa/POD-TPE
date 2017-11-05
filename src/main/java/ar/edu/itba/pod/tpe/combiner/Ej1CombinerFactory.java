@@ -12,6 +12,7 @@ public class Ej1CombinerFactory implements CombinerFactory<String,Integer,Intege
 
 	private class Ej1Combiner extends Combiner<Integer,Integer>{
 		int count = 0;
+
 		@Override
 		public void combine(Integer integer) {
 			count++;
