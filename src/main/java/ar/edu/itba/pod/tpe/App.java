@@ -28,6 +28,7 @@ public class App {
 
 		JobTracker jt = hi.getJobTracker("province-pairs");
         IList<CensusEntry> set = hi.getList("Data");
+        set.clear();
 
 		CsvParserSettings settings = new CsvParserSettings();
 		settings.getFormat().setLineSeparator("\n");
@@ -72,13 +73,15 @@ public class App {
 		System.out.println("ST");
 		Set<KeyValue> res = future.get();
 		System.out.println("Fin");
-		logger.info("Finished: Job completed in " + (System.currentTimeMillis() - time) + "ms");
+		long totalTime = (System.currentTimeMillis() - time);
+		System.out.println("Total time: " + totalTime);
+		logger.info("Finished: Job completed in " + totalTime + "ms");
 		BufferedWriter writer = new BufferedWriter(new FileWriter(params.getOutPath()));
 		for(KeyValue o : res){
 			writer.write(o.getKey() + " " + o.getValue() + "\n");
 		}
 		writer.close();
-        System.out.println(res);
+        params.printResult(res);
 
     }
 

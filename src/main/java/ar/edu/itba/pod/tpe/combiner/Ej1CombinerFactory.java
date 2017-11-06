@@ -3,10 +3,10 @@ package ar.edu.itba.pod.tpe.combiner;
 import com.hazelcast.mapreduce.Combiner;
 import com.hazelcast.mapreduce.CombinerFactory;
 
-public class Ej1CombinerFactory implements CombinerFactory<String,Integer,Integer> {
+public class Ej1CombinerFactory implements CombinerFactory<Integer,Integer,Integer> {
 
 	@Override
-	public Combiner<Integer, Integer> newCombiner(String s) {
+	public Combiner<Integer, Integer> newCombiner(Integer s) {
 		return new Ej1Combiner();
 	}
 

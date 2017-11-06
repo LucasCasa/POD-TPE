@@ -5,14 +5,14 @@ import ar.edu.itba.pod.tpe.utils.ProvinceTo;
 import com.hazelcast.mapreduce.Context;
 import com.hazelcast.mapreduce.Mapper;
 
-public class Ej1Mapper implements Mapper<String,CensusEntry,String,Integer>{
+public class Ej1Mapper implements Mapper<String,CensusEntry,Integer,Integer>{
 
     public Ej1Mapper() {}
 
     @Override
-    public void map(String s, CensusEntry ce, Context<String, Integer> context) {
+    public void map(String s, CensusEntry ce, Context<Integer, Integer> context) {
         String aux = ce.getProvince().toLowerCase();
-        String t = ProvinceTo.region.get(aux);
+        Integer t = ProvinceTo.provinceToRegionId.get(aux);
         context.emit(t,1);
     }
 }

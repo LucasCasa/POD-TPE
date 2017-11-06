@@ -8,6 +8,9 @@ import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.mapreduce.*;
 import com.hazelcast.security.UsernamePasswordCredentials;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public class ParamLoader {
 		private String address, data, outPath, timeOutPath;
 		private int query;
@@ -123,6 +126,17 @@ public class ParamLoader {
 			default:
 				throw new IllegalArgumentException("This query has no combiner");
 		}
+	}
+
+	public void printResult(Set<KeyValue> set) {
+		switch (query){
+			case 1: set = set.stream()
+					.map(x -> new KeyValue<String,Integer>(ProvinceTo.idToRegion.get(x.getKey()),(int)x.getValue()))
+					.collect(Collectors.toSet());
+					break;
+			default: break;
+		}
+		System.out.println(set);
 	}
 
 	public String getDataPath() {
