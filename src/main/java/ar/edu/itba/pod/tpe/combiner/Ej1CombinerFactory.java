@@ -11,7 +11,7 @@ public class Ej1CombinerFactory implements CombinerFactory<String,Integer,Intege
 	}
 
 	private class Ej1Combiner extends Combiner<Integer,Integer>{
-		int count;
+		int count = 0;
 
 		public Ej1Combiner() {
 			this.count = 0;

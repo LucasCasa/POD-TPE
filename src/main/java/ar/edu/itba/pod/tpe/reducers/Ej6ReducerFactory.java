@@ -17,14 +17,12 @@ public class Ej6ReducerFactory implements ReducerFactory<String, String, Integer
 
 		@Override
 		public void reduce(String s) {
-			if(!counted.contains(s))
-				count++;
 			counted.add(s);
 		}
 
 		@Override
 		public Integer finalizeReduce() {
-			return count;
+			return counted.size();
 		}
 	}
 }

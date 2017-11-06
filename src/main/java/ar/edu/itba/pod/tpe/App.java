@@ -28,7 +28,7 @@ public class App {
 
 		JobTracker jt = hi.getJobTracker("province-pairs");
         IList<CensusEntry> set = hi.getList("Data");
-
+		set.clear();
 		CsvParserSettings settings = new CsvParserSettings();
 		settings.getFormat().setLineSeparator("\n");
 		settings.getFormat().setDelimiter(',');
@@ -47,8 +47,8 @@ public class App {
         for(String[] row : allRows){
             nl.add(new CensusEntry(row));
         }
-    System.out.println("Adding to IList");
-    set.addAll(nl);
+    	System.out.println("Adding to IList");
+    	set.addAll(nl);
 		System.out.println("Finished Adding to IList");
 		logger.info("Finished Reading and Parsing data. Time elapsed: " + (System.currentTimeMillis() - time) + "ms");
 		System.out.println(set.size());
@@ -72,13 +72,15 @@ public class App {
 		System.out.println("ST");
 		Set<KeyValue> res = future.get();
 		System.out.println("Fin");
-		logger.info("Finished: Job completed in " + (System.currentTimeMillis() - time) + "ms");
+		long t = System.currentTimeMillis() - time;
+		logger.info("Finished: Job completed in " + t + "ms");
 		BufferedWriter writer = new BufferedWriter(new FileWriter(params.getOutPath()));
 		for(KeyValue o : res){
 			writer.write(o.getKey() + " " + o.getValue() + "\n");
 		}
 		writer.close();
         System.out.println(res);
+        System.out.println(t);
 
     }
 

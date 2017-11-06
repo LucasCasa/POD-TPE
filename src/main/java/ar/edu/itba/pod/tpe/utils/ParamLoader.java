@@ -24,6 +24,7 @@ public class ParamLoader {
 		String[] addresses = address.split(";");
 		for(String addr : addresses) {
 			config.getNetworkConfig().addAddress(addr);
+			config.getNetworkConfig().setConnectionAttemptLimit(5);
 		}
 		config.setCredentials(new UsernamePasswordCredentials("55302","pass"));
 		config.getGroupConfig().setName("55302").setPassword("pass");
@@ -105,7 +106,7 @@ public class ParamLoader {
 	}
 
 	public boolean hasCombiner(){
-		 return query == 1 || query == 2;
+		 return query == 1 || query == 2 || query == 3 || query == 4 || query == 6;
 	}
 
 	public CombinerFactory getCombiner(){
