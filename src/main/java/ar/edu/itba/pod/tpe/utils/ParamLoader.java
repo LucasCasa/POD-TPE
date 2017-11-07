@@ -24,6 +24,7 @@ public class ParamLoader {
 		String[] addresses = address.split(";");
 		for(String addr : addresses) {
 			config.getNetworkConfig().addAddress(addr);
+			config.getNetworkConfig().setConnectionAttemptLimit(5);
 		}
 		config.setCredentials(new UsernamePasswordCredentials("55302","pass"));
 		config.getGroupConfig().setName("55302").setPassword("pass");

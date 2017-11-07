@@ -27,6 +27,7 @@ public class App {
 
 		JobTracker jt = hi.getJobTracker("55165-55302-55206-53774");
         IList<CensusEntry> list = hi.getList("55165-55302-55206-53774");
+        list.clear();
 
 		CsvParserSettings settings = new CsvParserSettings();
 		settings.getFormat().setLineSeparator("\n");

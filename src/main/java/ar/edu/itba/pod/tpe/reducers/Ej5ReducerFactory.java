@@ -4,7 +4,9 @@ import com.hazelcast.mapreduce.Reducer;
 import com.hazelcast.mapreduce.ReducerFactory;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.HashSet;
+import java.util.Locale;
 
 public class Ej5ReducerFactory implements ReducerFactory<String, Integer, Float> {
     @Override
@@ -15,7 +17,7 @@ public class Ej5ReducerFactory implements ReducerFactory<String, Integer, Float>
     private class Ej5Reducer extends Reducer<Integer, Float> {
 
         private HashSet<Integer> houses;
-        private int counterPop = 0;
+        private float counterPop = 0;
 
         Ej5Reducer(){
             houses = new HashSet<>();
@@ -30,8 +32,10 @@ public class Ej5ReducerFactory implements ReducerFactory<String, Integer, Float>
 
         @Override
         public Float finalizeReduce() {
-            DecimalFormat decimalFormat = new DecimalFormat("#.##");
-            return Float.valueOf(decimalFormat.format(counterPop / houses.size()));
+            NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
+            DecimalFormat df = (DecimalFormat)nf;
+            df.applyPattern("#.##");
+            return Float.valueOf(df.format(counterPop / houses.size()));
         }
     }
 }

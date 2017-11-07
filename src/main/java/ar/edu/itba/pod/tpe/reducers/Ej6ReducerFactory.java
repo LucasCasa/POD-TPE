@@ -24,7 +24,7 @@ public class Ej6ReducerFactory implements ReducerFactory<String, String, Integer
 
 		@Override
 		public Integer finalizeReduce() {
-			return count;
+			return counted.size();
 		}
 	}
 }
