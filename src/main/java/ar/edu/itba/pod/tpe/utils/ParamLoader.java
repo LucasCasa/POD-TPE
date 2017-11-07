@@ -26,8 +26,7 @@ public class ParamLoader {
 			config.getNetworkConfig().addAddress(addr);
 			config.getNetworkConfig().setConnectionAttemptLimit(5);
 		}
-		config.setCredentials(new UsernamePasswordCredentials("55302","pass"));
-		config.getGroupConfig().setName("55302").setPassword("pass");
+		config.getGroupConfig().setName("55165-55302-55206-53774").setPassword("pass");
 		return config;
 	}
 
