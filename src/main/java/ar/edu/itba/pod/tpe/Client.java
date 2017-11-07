@@ -23,17 +23,19 @@ public class Client {
 	public static void main(String[] args) throws Exception{
 		ParamLoader params = new ParamLoader();
 
+		//Set the client and get the List
 		final HazelcastInstance hi = HazelcastClient.newHazelcastClient(params.getConfig());
-
 		JobTracker jt = hi.getJobTracker("55165-55302-55206-53774");
         IList<CensusEntry> list = hi.getList("55165-55302-55206-53774");
         list.clear();
 
+        //Configure the csv parser
 		CsvParserSettings settings = new CsvParserSettings();
 		settings.getFormat().setLineSeparator("\n");
 		settings.getFormat().setDelimiter(',');
 		CsvParser parser = new CsvParser(settings);
 
+		//Set the logger
 		PatternLayout layout = new PatternLayout();
 		layout.setConversionPattern("%d{dd/MM/yyyy HH:mm:ss:SSSS} - %m%n");
 		FileAppender appender = new FileAppender(layout, params.getLogFile(), false);
@@ -42,6 +44,7 @@ public class Client {
 		logger.info("Start to read File");
 		System.out.println("Start to read File");
 
+		//Load all the data of the csv
 		List<String[]> allRows = parser.parseAll(getReader(params.getDataPath()));
 		List<CensusEntry> nl = new ArrayList<>(1000000);
         for(String[] row : allRows){
@@ -50,6 +53,8 @@ public class Client {
     	list.addAll(nl);
 		logger.info("Finished Reading and Parsing data. Time elapsed: " + (System.currentTimeMillis() - time) + "ms");
 		System.out.println("Finished Reading and Parsing data. Time elapsed: " + (System.currentTimeMillis() - time) + "ms");
+
+		//Create the job
 		final KeyValueSource<String, CensusEntry> source = KeyValueSource.fromList(list);
         Job<String, CensusEntry> job = jt.newJob(source);
 		ICompletableFuture<Set<KeyValue>> future;
@@ -65,10 +70,14 @@ public class Client {
 					.reducer(params.getReducer())
 					.submit(params.getCollator());
 		}
+
 		time = System.currentTimeMillis();
 		logger.info("Starting map/reduce job");
 		System.out.println("Start map/reduce job");
+
 		Set<KeyValue> res = future.get();
+
+		//Show the result
 		long totalTime = (System.currentTimeMillis() - time);
 		System.out.println("End of map/reduce job in " + totalTime + "ms");
 		logger.info("Finished: Map/reduce job completed in " + totalTime + "ms");
