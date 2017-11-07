@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class App {
-	final static Logger logger = Logger.getLogger(App.class);
+public class Client {
+	final static Logger logger = Logger.getLogger(Client.class);
 
 	public static void main(String[] args) throws Exception{
 		ParamLoader params = new ParamLoader();
@@ -77,6 +77,7 @@ public class App {
 			writer.write(o.getKey() + "," + o.getValue() + "\n");
 		}
 		writer.close();
+		System.exit(0);
     }
 
 	/**

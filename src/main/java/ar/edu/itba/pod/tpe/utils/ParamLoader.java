@@ -12,7 +12,7 @@ public class ParamLoader {
 		private String address, data, outPath, timeOutPath;
 		private int query;
 	public ParamLoader(){
-		address = System.getProperty("address");
+		address = System.getProperty("addresses");
 		query = Integer.parseInt(System.getProperty("query"));
 		data = System.getProperty("inPath");
 		outPath = System.getProperty("outPath");
