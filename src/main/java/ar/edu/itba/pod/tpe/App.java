@@ -21,13 +21,12 @@ public class App {
 	final static Logger logger = Logger.getLogger(App.class);
 
 	public static void main(String[] args) throws Exception{
-		//HazelcastInstance hc = Hazelcast.newHazelcastInstance();
 		ParamLoader params = new ParamLoader();
 
 		final HazelcastInstance hi = HazelcastClient.newHazelcastClient(params.getConfig());
 
-		JobTracker jt = hi.getJobTracker("province-pairs");
-        IList<CensusEntry> set = hi.getList("Data");
+		JobTracker jt = hi.getJobTracker("55165-55302-55206-53774");
+        IList<CensusEntry> list = hi.getList("55165-55302-55206-53774");
 
 		CsvParserSettings settings = new CsvParserSettings();
 		settings.getFormat().setLineSeparator("\n");
@@ -40,25 +39,23 @@ public class App {
 		logger.addAppender(appender);
 		long time = System.currentTimeMillis();
 		logger.info("Start to read File");
+		System.out.println("Start to read File");
 
 		List<String[]> allRows = parser.parseAll(getReader(params.getDataPath()));
-		System.out.println(allRows.size());
 		List<CensusEntry> nl = new ArrayList<>(1000000);
         for(String[] row : allRows){
             nl.add(new CensusEntry(row));
         }
-    System.out.println("Adding to IList");
-    set.addAll(nl);
-		System.out.println("Finished Adding to IList");
+    	list.addAll(nl);
 		logger.info("Finished Reading and Parsing data. Time elapsed: " + (System.currentTimeMillis() - time) + "ms");
-		System.out.println(set.size());
-        final KeyValueSource<String, CensusEntry> source = KeyValueSource.fromList(set);
+		System.out.println("Finished Reading and Parsing data. Time elapsed: " + (System.currentTimeMillis() - time) + "ms");
+		final KeyValueSource<String, CensusEntry> source = KeyValueSource.fromList(list);
         Job<String, CensusEntry> job = jt.newJob(source);
 		ICompletableFuture<Set<KeyValue>> future;
 		if(params.hasCombiner()){
 			future = job
 					.mapper(params.getMapper())
-					//.combiner(params.getCombiner())
+					.combiner(params.getCombiner())
 					.reducer(params.getReducer())
 					.submit(params.getCollator());
 		}else{
@@ -68,18 +65,17 @@ public class App {
 					.submit(params.getCollator());
 		}
 		time = System.currentTimeMillis();
-		logger.info("Starting");
-		System.out.println("ST");
+		logger.info("Starting map/reduce job");
+		System.out.println("Start map/reduce job");
 		Set<KeyValue> res = future.get();
-		System.out.println("Fin");
-		logger.info("Finished: Job completed in " + (System.currentTimeMillis() - time) + "ms");
+		long totalTime = (System.currentTimeMillis() - time);
+		System.out.println("End of map/reduce job in " + totalTime + "ms");
+		logger.info("Finished: Map/reduce job completed in " + totalTime + "ms");
 		BufferedWriter writer = new BufferedWriter(new FileWriter(params.getOutPath()));
 		for(KeyValue o : res){
-			writer.write(o.getKey() + " " + o.getValue() + "\n");
+			writer.write(o.getKey() + "," + o.getValue() + "\n");
 		}
 		writer.close();
-        System.out.println(res);
-
     }
 
 	/**
