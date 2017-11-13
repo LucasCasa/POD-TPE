@@ -13,9 +13,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class App {
 	final static Logger logger = Logger.getLogger(App.class);
@@ -26,7 +24,7 @@ public class App {
 		final HazelcastInstance hi = HazelcastClient.newHazelcastClient(params.getConfig());
 
 		JobTracker jt = hi.getJobTracker("55165-55302-55206-53774");
-        IList<CensusEntry> list = hi.getList("55165-55302-55206-53774");
+        IMap<String,CensusEntry> list = hi.getMap("55165-55302-55206-53774");
         list.clear();
 
 		CsvParserSettings settings = new CsvParserSettings();
@@ -43,14 +41,15 @@ public class App {
 		System.out.println("Start to read File");
 
 		List<String[]> allRows = parser.parseAll(getReader(params.getDataPath()));
-		List<CensusEntry> nl = new ArrayList<>(1000000);
+		Map<String,CensusEntry> nl = new HashMap<>(1000000);
+		int i = 0;
         for(String[] row : allRows){
-            nl.add(new CensusEntry(row));
+            nl.put(String.valueOf(i++), new CensusEntry(row));
         }
-    	list.addAll(nl);
+    	list.putAll(nl);
 		logger.info("Finished Reading and Parsing data. Time elapsed: " + (System.currentTimeMillis() - time) + "ms");
 		System.out.println("Finished Reading and Parsing data. Time elapsed: " + (System.currentTimeMillis() - time) + "ms");
-		final KeyValueSource<String, CensusEntry> source = KeyValueSource.fromList(list);
+		final KeyValueSource<String, CensusEntry> source = KeyValueSource.fromMap(list);
         Job<String, CensusEntry> job = jt.newJob(source);
 		ICompletableFuture<Set<KeyValue>> future;
 		if(params.hasCombiner()){
